@@ -73,16 +73,11 @@ jobs:
           npm ci
           npm audit fix
           npm audit --audit-level=moderate
-          node --input-type=module <<'NODE'
-          import fs from 'node:fs';
-          import mysql from 'mysql2/promise';
-          const connection = await mysql.createConnection({ host: process.env.DB_HOST, port: Number(process.env.DB_PORT), user: process.env.DB_USER, password: process.env.DB_PASSWORD, multipleStatements: true });
-          try {
-            await connection.query(fs.readFileSync('../database/schema.sql', 'utf8'));
-            await connection.query('SELECT 1 FROM chuchicharas_db.users LIMIT 1');
-            console.log('Esquema MySQL cargado y tabla users verificada.');
-          } finally { await connection.end(); }
-          NODE
+          MYSQL_CONTAINER=$(docker ps --format '{{.ID}} {{.Image}}' | awk '$2 ~ /^mysql:8.0/ {print $1; exit}')
+          test -n "$MYSQL_CONTAINER"
+          docker exec -i "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 < ../database/schema.sql
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -e "USE chuchicharas_db; SELECT 1 FROM users LIMIT 1;"
+          echo "Esquema MySQL cargado con el cliente oficial; tabla users verificada."
           find src test -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
           npm test
           npm run test:integration
