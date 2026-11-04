@@ -40,6 +40,9 @@ jobs:
           test -f work/Chuchicharas/backend/package.json
           echo "Proyecto extraído correctamente."
 
+      - name: Aplicar catálogo local y diseño responsivo
+        run: node .github/scripts/prepare-frontend.mjs
+
       - name: Instalar y probar backend
         working-directory: work/Chuchicharas/backend
         run: |
@@ -55,7 +58,7 @@ jobs:
           node --input-type=module -e "import fs from 'node:fs'; const p='vite.config.js'; let s=fs.readFileSync(p,'utf8'); if (!/base:/.test(s)) s=s.replace('export default defineConfig({', \"export default defineConfig({\\n  base: './',\"); fs.writeFileSync(p,s);"
           npm run build
           if [ -z "$VITE_API_URL" ]; then
-            echo "::warning::VITE_API_URL no está configurada. La APK abrirá la interfaz, pero las funciones que requieren API no funcionarán hasta configurar un backend HTTPS y recompilar."
+            echo "::warning::VITE_API_URL no está configurada. El catálogo público funcionará con los 141 productos locales; cuentas, pedidos y administración requieren desplegar el backend HTTPS."
           fi
           npm install --no-save --no-package-lock @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
           cat > capacitor.config.json <<'EOF'
