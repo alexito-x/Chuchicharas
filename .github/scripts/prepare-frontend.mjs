@@ -14,11 +14,11 @@ fs.copyFileSync(catalogPath, path.join(dataDir, 'catalog-fallback.json'));
 fs.writeFileSync(path.join(frontend, 'src/services/localCatalog.js'), String.raw`import catalog from '../data/catalog-fallback.json';
 
 const slugify = (value) => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-const categories = catalog.categories.map((item, index) => ({ id: index + 1, ...item, image_url: '/images/placeholder-general.svg', is_active: true }));
+const categories = catalog.categories.map((item, index) => ({ id: index + 1, ...item, image_url: item.imageUrl || item.image_url || '/images/placeholder-general.svg', is_active: true }));
 const categoryBySlug = new Map(categories.map((item) => [item.slug, item]));
 const products = catalog.products.map((item, index) => {
   const category = categoryBySlug.get(item.categorySlug);
-  return { id: index + 1, sku: item.sku, name: item.name, slug: slugify(item.name) + '-' + slugify(item.sku), price: Number(item.price), originalPrice: null, primaryImage: '/images/product-placeholder.svg', brand: null, stockQuantity: 10, isFeatured: Boolean(item.featured), ratingAverage: 0, ratingCount: 0, shippingFree: false, conditionType: 'new', categoryId: category ? category.id : null, category: category ? { id: category.id, name: category.name, slug: category.slug } : null, isActive: true, onSale: false };
+  return { id: index + 1, sku: item.sku, name: item.name, slug: slugify(item.name) + '-' + slugify(item.sku), price: Number(item.price), originalPrice: null, primaryImage: item.imageUrl || item.image_url || item.primaryImage || '/images/product-placeholder.svg', brand: null, stockQuantity: 10, isFeatured: Boolean(item.featured), ratingAverage: 0, ratingCount: 0, shippingFree: false, conditionType: 'new', categoryId: category ? category.id : null, category: category ? { id: category.id, name: category.name, slug: category.slug } : null, isActive: true, onSale: false };
 });
 const num = (value, fallback) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const localCatalog = {
@@ -155,3 +155,99 @@ html, body, #root { width: 100%; min-width: 320px; max-width: 100%; overflow-x: 
 fs.writeFileSync(cssPath, css);
 
 console.log('Preparación completada: catálogo local de 141 productos y diseño responsivo aplicado.');
+
+
+/* Header móvil nativo: zona segura, filas independientes y controles despejados */
+.header { padding-top: max(env(safe-area-inset-top, 0px), 28px); }
+@media (max-width: 720px) {
+  .header { top: 0; padding-top: max(env(safe-area-inset-top, 0px), 30px); }
+  .header > .container { padding-left: 12px; padding-right: 12px; }
+  .header-top {
+    display: grid !important;
+    grid-template-columns: 42px minmax(0, 1fr) auto !important;
+    grid-template-rows: 48px 46px !important;
+    align-items: center !important;
+    column-gap: 9px !important;
+    row-gap: 10px !important;
+    padding: 0 0 12px !important;
+    width: 100%;
+  }
+  .menu-toggle {
+    grid-column: 1; grid-row: 1;
+    display: grid !important; place-items: center;
+    width: 42px; height: 42px; margin: 0;
+    border: 1px solid var(--brand-200); border-radius: 12px;
+    background: var(--brand-50); color: var(--brand-dark);
+  }
+  .header-top > .logo {
+    grid-column: 2; grid-row: 1;
+    justify-self: start; align-self: center;
+    min-width: 0; height: 46px; margin: 0;
+  }
+  .header-top > .logo img {
+    display: block; height: 44px; width: auto;
+    max-width: min(43vw, 156px); object-fit: contain;
+  }
+  .header-actions {
+    grid-column: 3; grid-row: 1;
+    display: flex !important; align-items: center; justify-self: end;
+    gap: 5px !important; min-width: 0; margin: 0 !important;
+  }
+  .header-actions > .header-link,
+  .header-actions > .user-menu > .header-link {
+    display: grid; place-items: center;
+    position: relative; width: 40px; height: 40px;
+    min-width: 40px; padding: 0 !important; margin: 0;
+    border: 1px solid var(--brand-200); border-radius: 12px;
+    background: #fff;
+  }
+  .header-actions .header-link span:not(.cart-badge),
+  .header-actions .header-link > svg + span:not(.cart-badge),
+  .header-actions .user-menu .header-link span { display: none !important; }
+  .header-actions .header-link.hide-mobile { display: none !important; }
+  .header-actions .cart-badge { top: -5px; right: -5px; }
+  .header-search {
+    grid-column: 1 / -1; grid-row: 2;
+    display: block; width: 100%; max-width: none !important;
+    min-width: 0; margin: 0;
+  }
+  .header-search form {
+    display: flex; width: 100%; height: 46px; min-height: 46px;
+    border-radius: 13px; overflow: hidden;
+  }
+  .header-search input {
+    display: block; flex: 1 1 auto; min-width: 0; width: 0;
+    height: 44px; padding: 0 13px; font-size: 14px;
+  }
+  .header-search input::placeholder { font-size: 13px; }
+  .header-search .search-btn { flex: 0 0 48px; width: 48px; padding: 0; }
+  .header-categories { display: none !important; }
+  .postal-code-bar { width: 100%; }
+  .postal-code-bar-inner {
+    min-height: 38px; display: flex; flex-wrap: nowrap;
+    justify-content: center; align-items: center;
+    gap: 7px; padding: 5px 8px !important;
+    font-size: 12px; overflow: hidden;
+  }
+  .postal-code-icon { flex: 0 0 auto; }
+  .postal-code-value { flex: 0 0 auto; white-space: nowrap; }
+  .postal-code-copy { display: inline; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .postal-code-place { display: none !important; }
+  .postal-code-refresh { flex: 0 0 auto; padding: 5px 7px; }
+  .mobile-menu {
+    position: absolute; top: calc(100% - 38px); left: 10px; right: 10px;
+    width: auto; max-width: none; max-height: min(65vh, 500px);
+    overflow-y: auto; border-radius: 14px;
+  }
+}
+@media (max-width: 380px) {
+  .header-top { grid-template-columns: 38px minmax(0, 1fr) auto !important; column-gap: 6px !important; }
+  .menu-toggle { width: 38px; height: 40px; }
+  .header-top > .logo img { height: 40px; max-width: 39vw; }
+  .header-actions { gap: 3px !important; }
+  .header-actions > .header-link,
+  .header-actions > .user-menu > .header-link { width: 36px; height: 38px; min-width: 36px; }
+}
+@media (min-width: 721px) {
+  .header { padding-top: 0; }
+}
