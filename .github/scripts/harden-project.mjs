@@ -94,8 +94,13 @@ fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 const lockPath = path.join(root, 'backend/package-lock.json');
 const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
 if (lock.packages?.['']?.dependencies) {
-  delete lock.packages[''].dependencies.multer;\n  delete lock.packages[''].dependencies.nodemailer;\n  delete lock.packages[''].dependencies.uuid;\n}
-if (lock.packages?.['node_modules/multer']) delete lock.packages['node_modules/multer'];\nif (lock.packages?.['node_modules/nodemailer']) delete lock.packages['node_modules/nodemailer'];\nif (lock.packages?.['node_modules/uuid']) delete lock.packages['node_modules/uuid'];
+  delete lock.packages[''].dependencies.multer;
+  delete lock.packages[''].dependencies.nodemailer;
+  delete lock.packages[''].dependencies.uuid;
+}
+for (const name of ['multer', 'nodemailer', 'uuid']) {
+  if (lock.packages?.['node_modules/' + name]) delete lock.packages['node_modules/' + name];
+}
 fs.writeFileSync(lockPath, JSON.stringify(lock, null, 2) + '\n');
 
 const integration = String.raw`import test, { before, after } from 'node:test';
