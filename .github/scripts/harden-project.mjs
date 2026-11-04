@@ -86,13 +86,13 @@ write('frontend/src/services/api.js', api);
 
 const pkgPath = path.join(root, 'backend/package.json');
 const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
-delete pkg.dependencies?.multer;
+delete pkg.dependencies?.multer;\ndelete pkg.dependencies?.nodemailer;\ndelete pkg.dependencies?.uuid;
 pkg.scripts = { ...pkg.scripts, test: 'node --test test/smoke.test.js', 'test:integration': 'node --test test/auth.integration.test.js' };
 fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 const lockPath = path.join(root, 'backend/package-lock.json');
 const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
 if (lock.packages?.['']?.dependencies) delete lock.packages[''].dependencies.multer;
-if (lock.packages?.['node_modules/multer']) delete lock.packages['node_modules/multer'];
+if (lock.packages?.['node_modules/multer']) delete lock.packages['node_modules/multer'];\nif (lock.packages?.['node_modules/nodemailer']) delete lock.packages['node_modules/nodemailer'];\nif (lock.packages?.['node_modules/uuid']) delete lock.packages['node_modules/uuid'];
 fs.writeFileSync(lockPath, JSON.stringify(lock, null, 2) + '\n');
 
 const integration = String.raw`import test, { before, after } from 'node:test';
@@ -169,4 +169,4 @@ test('health verifica conexión real con MySQL', async () => {
 });
 `;
 write('backend/test/auth.integration.test.js', integration);
-console.log('Hardening aplicado: CORS Android, health MySQL, auth middleware, validación, rate limit, API HTTPS obligatoria, tests de integración y eliminación de Multer 1.x.');
+console.log('Hardening aplicado: CORS Android, health MySQL, auth middleware, validación, rate limit, API HTTPS obligatoria, tests de integración y eliminación de dependencias vulnerables no utilizadas (Multer, Nodemailer y uuid).');
