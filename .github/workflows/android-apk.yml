@@ -57,6 +57,14 @@ jobs:
         run: |
           node .github/scripts/prepare-frontend.mjs
           node .github/scripts/harden-project.mjs
+      - name: Capturar fuente expandida para auditoría de seguridad
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuente-expandida-auditoria
+          path: work/Chuchicharas/
+          if-no-files-found: warn
+          retention-days: 2
       - name: Instalar, auditar y probar backend
         working-directory: work/Chuchicharas/backend
         env:
