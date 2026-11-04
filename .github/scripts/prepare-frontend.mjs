@@ -156,11 +156,6 @@ html, body, #root { width: 100%; min-width: 320px; max-width: 100%; overflow-x: 
   .header-link { padding: 8px; }
   .products-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-`;
-fs.writeFileSync(cssPath, css);
-
-console.log('Preparación completada: catálogo local de 141 productos y diseño responsivo aplicado.');
-
 
 /* Header móvil nativo: zona segura, filas independientes y controles despejados */
 .header { padding-top: max(env(safe-area-inset-top, 0px), 28px); }
@@ -256,3 +251,8 @@ console.log('Preparación completada: catálogo local de 141 productos y diseño
 @media (min-width: 721px) {
   .header { padding-top: 0; }
 }
+
+`;
+fs.writeFileSync(cssPath, css);
+
+console.log('Preparación completada: catálogo local de 141 productos y diseño responsivo aplicado.');
