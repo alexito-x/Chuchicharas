@@ -1,4 +1,4 @@
-name: Analisis y APK Android
+name: Analisis, pruebas y APK Android
 
 on:
   workflow_dispatch:
@@ -11,10 +11,22 @@ permissions:
 jobs:
   test-and-build:
     runs-on: ubuntu-24.04
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci_root_password_2026
+          MYSQL_DATABASE: chuchicharas_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci_root_password_2026"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
     steps:
       - name: Obtener repositorio
         uses: actions/checkout@v4
-
       - name: Preparar Node y Java
         uses: actions/setup-node@v4
         with:
@@ -23,7 +35,6 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-
       - name: Extraer paquetes del proyecto
         shell: bash
         run: |
@@ -38,55 +49,99 @@ jobs:
           for archive in "${archives[@]}"; do unzip -oq "$archive" -d work; done
           test -f work/Chuchicharas/frontend/package.json
           test -f work/Chuchicharas/backend/package.json
-          echo "Proyecto extraído correctamente."
-
-      - name: Validar sintaxis de scripts antes de preparar el proyecto
-        run: node --check .github/scripts/prepare-frontend.mjs
-
-      - name: Aplicar catálogo local y diseño responsivo
-        run: node .github/scripts/prepare-frontend.mjs
-
-      - name: Instalar y probar backend
-        working-directory: work/Chuchicharas/backend
+          test -f work/Chuchicharas/database/schema.sql
+          echo "Proyecto y esquema MySQL extraídos correctamente."
+      - name: Validar sintaxis de scripts del repositorio
+        run: node --check .github/scripts/prepare-frontend.mjs && node --check .github/scripts/harden-project.mjs
+      - name: Preparar frontend y aplicar endurecimiento
         run: |
+          node .github/scripts/prepare-frontend.mjs
+          node .github/scripts/harden-project.mjs
+      - name: Instalar, auditar y probar backend
+        working-directory: work/Chuchicharas/backend
+        env:
+          NODE_ENV: test
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASSWORD: ci_root_password_2026
+          DB_NAME: chuchicharas_db
+          JWT_SECRET: ci_access_secret_32_chars_minimum_2026
+          JWT_REFRESH_SECRET: ci_refresh_secret_32_chars_minimum_2026
+        run: |
+          set -euo pipefail
           npm ci
+          npm audit fix
+          npm audit --audit-level=moderate
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import mysql from 'mysql2/promise';
+          const connection = await mysql.createConnection({ host: process.env.DB_HOST, port: Number(process.env.DB_PORT), user: process.env.DB_USER, password: process.env.DB_PASSWORD, multipleStatements: true });
+          try {
+            await connection.query(fs.readFileSync('../database/schema.sql', 'utf8'));
+            await connection.query('SELECT 1 FROM chuchicharas_db.users LIMIT 1');
+            console.log('Esquema MySQL cargado y tabla users verificada.');
+          } finally { await connection.end(); }
+          NODE
+          find src test -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
           npm test
-
-      - name: Instalar dependencias y compilar frontend
+          npm run test:integration
+      - name: Instalar y auditar frontend
+        working-directory: work/Chuchicharas/frontend
+        run: |
+          set -euo pipefail
+          npm ci
+          npm audit fix
+          npm audit --audit-level=moderate
+      - name: Validar URL HTTPS de API para Android
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          const value = process.env.VITE_API_URL || '';
+          let parsed;
+          try { parsed = new URL(value); } catch { throw new Error('Falta configurar el secreto VITE_API_URL con la URL pública de Azure.'); }
+          if (parsed.protocol !== 'https:' || /localhost|127\.0\.0\.1/i.test(parsed.hostname) || !parsed.pathname.replace(/\/$/, '').endsWith('/api/v1')) throw new Error('VITE_API_URL debe ser HTTPS público y terminar en /api/v1.');
+          console.log('API configurada: ' + parsed.origin + parsed.pathname);
+          NODE
+      - name: Compilar frontend y APK Android
         working-directory: work/Chuchicharas/frontend
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: |
-          npm ci
+          set -euo pipefail
           node --input-type=module -e "import fs from 'node:fs'; const p='vite.config.js'; let s=fs.readFileSync(p,'utf8'); if (!/base:/.test(s)) s=s.replace('export default defineConfig({', \"export default defineConfig({\\n  base: './',\"); fs.writeFileSync(p,s);"
           npm run build
-          if [ -z "$VITE_API_URL" ]; then
-            echo "::warning::VITE_API_URL no está configurada. El catálogo público funcionará con los 141 productos locales; cuentas, pedidos y administración requieren desplegar el backend HTTPS."
-          fi
           npm install --no-save --no-package-lock @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
-          cat > capacitor.config.json <<'EOF'
+          cat > capacitor.config.json <<'JSON'
           {
             "appId": "com.chuchicharas.app",
             "appName": "Chuchicharas",
             "webDir": "dist",
             "server": { "androidScheme": "https" }
           }
-          EOF
+          JSON
           npx cap add android
           npx cap sync android
           cd android
           chmod +x gradlew
           ./gradlew --no-daemon assembleDebug
-
-      - name: Verificar APK
+      - name: Verificar APK y ausencia de localhost
         shell: bash
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: |
           set -euo pipefail
           APK="work/Chuchicharas/frontend/android/app/build/outputs/apk/debug/app-debug.apk"
           test -s "$APK"
+          unzip -p "$APK" assets/public/assets/*.js | grep -F "$VITE_API_URL" >/dev/null
+          if unzip -p "$APK" assets/public/assets/*.js | grep -E 'http://localhost:3001/api/v1|http://127\.0\.0\.1'; then
+            echo "La APK contiene una URL local; se cancela la publicación."
+            exit 1
+          fi
           file "$APK"
           sha256sum "$APK"
-
       - name: Publicar APK instalable
         uses: actions/upload-artifact@v4
         with:
@@ -94,7 +149,6 @@ jobs:
           path: work/Chuchicharas/frontend/android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 30
-
       - name: Publicar informe de análisis
         if: always()
         uses: actions/upload-artifact@v4
