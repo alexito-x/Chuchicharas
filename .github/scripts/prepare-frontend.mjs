@@ -87,6 +87,11 @@ export const categoryService = {
 export default categoryService;
 `);
 
+const indexPath = path.join(frontend, 'index.html');
+let html = fs.readFileSync(indexPath, 'utf8');
+html = html.replace(/<meta name="viewport"[^>]*>/, '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />');
+fs.writeFileSync(indexPath, html);
+
 const cssPath = path.join(frontend, 'src/styles/main.css');
 let css = fs.readFileSync(cssPath, 'utf8');
 if (!css.includes('Ajustes responsivos integrales')) css += `
