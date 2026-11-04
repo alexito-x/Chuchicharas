@@ -3,7 +3,11 @@ import path from 'node:path';
 
 const root = path.resolve('work/Chuchicharas');
 const frontend = path.join(root, 'frontend');
-const catalogPath = path.join(root, 'backend/scripts/data/catalogo-141.json');
+const backend = path.join(root, 'backend');
+const catalogPath = path.join(backend, 'scripts/data/catalogo-141.json');
+for (const required of [path.join(frontend, 'package.json'), path.join(frontend, 'index.html'), catalogPath]) {
+  if (!fs.existsSync(required)) throw new Error(`Falta archivo requerido para preparar el frontend: ${required}`);
+}
 const catalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
 if (!Array.isArray(catalog.products) || catalog.products.length !== 141) throw new Error('Catálogo local inválido: se esperaban 141 productos.');
 
@@ -92,7 +96,14 @@ let html = fs.readFileSync(indexPath, 'utf8');
 html = html.replace(/<meta name="viewport"[^>]*>/, '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />');
 fs.writeFileSync(indexPath, html);
 
-const cssPath = path.join(frontend, 'src/styles/main.css');
+const cssCandidates = [
+  path.join(frontend, 'src/styles/main.css'),
+  path.join(frontend, 'src/main.css'),
+  path.join(frontend, 'src/index.css'),
+  path.join(frontend, 'src/App.css')
+];
+const cssPath = cssCandidates.find((candidate) => fs.existsSync(candidate));
+if (!cssPath) throw new Error(`No se encontró la hoja CSS principal. Rutas revisadas: ${cssCandidates.join(', ')}`);
 let css = fs.readFileSync(cssPath, 'utf8');
 if (!css.includes('Ajustes responsivos integrales')) css += `
 
