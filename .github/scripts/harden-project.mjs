@@ -91,7 +91,7 @@ pkg.scripts = { ...pkg.scripts, test: 'node --test test/smoke.test.js', 'test:in
 fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 const lockPath = path.join(root, 'backend/package-lock.json');
 const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
-if (lock.packages?.['']?.dependencies) delete lock.packages[''].dependencies.multer;
+if (lock.packages?.['']?.dependencies) {\n  delete lock.packages[''].dependencies.multer;\n  delete lock.packages[''].dependencies.nodemailer;\n  delete lock.packages[''].dependencies.uuid;\n}
 if (lock.packages?.['node_modules/multer']) delete lock.packages['node_modules/multer'];\nif (lock.packages?.['node_modules/nodemailer']) delete lock.packages['node_modules/nodemailer'];\nif (lock.packages?.['node_modules/uuid']) delete lock.packages['node_modules/uuid'];
 fs.writeFileSync(lockPath, JSON.stringify(lock, null, 2) + '\n');
 
