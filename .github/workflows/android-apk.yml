@@ -40,6 +40,9 @@ jobs:
           test -f work/Chuchicharas/backend/package.json
           echo "Proyecto extraído correctamente."
 
+      - name: Validar sintaxis de scripts antes de preparar el proyecto
+        run: node --check .github/scripts/prepare-frontend.mjs
+
       - name: Aplicar catálogo local y diseño responsivo
         run: node .github/scripts/prepare-frontend.mjs
 
