@@ -3,9 +3,6 @@ name: Analisis y APK Android
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'Chuchicharas-Parte-*.zip'
-      - '.github/workflows/android-apk.yml'
 
 permissions:
   contents: read
