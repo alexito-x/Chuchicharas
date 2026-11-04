@@ -1,0 +1,55 @@
+name: Analisis y APK Android
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'Chuchicharas-Parte-*.zip'
+      - '.github/workflows/android-apk.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-and-build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar herramientas
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Extraer paquetes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          for archive in Chuchicharas-Parte-*.zip; do
+            echo "::group::Contenido de $archive"
+            unzip -l "$archive"
+            echo "::endgroup::"
+            unzip -oq "$archive" -d work
+          done
+          echo "=== ESTRUCTURA EXTRAIDA ==="
+          find work -maxdepth 5 -type f | sort | head -n 1500
+          echo "=== MANIFESTS ==="
+          find work -name package.json -o -name settings.gradle -o -name settings.gradle.kts -o -name build.gradle -o -name build.gradle.kts -o -name capacitor.config.* | sort
+
+      - name: Analizar manifiestos
+        shell: bash
+        run: |
+          find work -name package.json -print0 | while IFS= read -r -d '' f; do
+            echo "===== $f ====="
+            node -e "const p=require('./$f'); console.log(JSON.stringify({name:p.name,scripts:p.scripts,dependencies:p.dependencies,devDependencies:p.devDependencies},null,2))"
+          done
+
+      - name: Publicar informe de análisis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analisis-estructura-chuchicharas
+          path: work/
+          if-no-files-found: warn
