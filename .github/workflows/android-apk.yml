@@ -51,6 +51,16 @@ jobs:
           test -f work/Chuchicharas/backend/package.json
           test -f work/Chuchicharas/database/schema.sql
           echo "Proyecto y esquema MySQL extraídos correctamente."
+      - name: Localizar implementación de sesiones y almacenamiento
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '--- Archivos candidatos ---'
+          find work/Chuchicharas/backend/src work/Chuchicharas/frontend/src -type f \\( -name '*.js' -o -name '*.jsx' -o -name '*.ts' -o -name '*.tsx' \\) | grep -Ei 'auth|session|token|api|storage|context|provider' | sort || true
+          echo '--- Backend: referencias de refresh/logout ---'
+          grep -RniE -C 4 'refreshToken|refresh_token|verifyRefreshToken|logout|generateTokens' work/Chuchicharas/backend/src --include='*.js' || true
+          echo '--- Frontend: referencias de tokens y localStorage ---'
+          grep -RniE -C 3 'localStorage|accessToken|refreshToken|refresh_token|logout' work/Chuchicharas/frontend/src --include='*.js' --include='*.jsx' --include='*.ts' --include='*.tsx' || true
       - name: Validar sintaxis de scripts del repositorio
         run: node --check .github/scripts/prepare-frontend.mjs && node --check .github/scripts/harden-project.mjs
       - name: Preparar frontend y aplicar endurecimiento
