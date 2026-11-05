@@ -1,0 +1,74 @@
+name: Expandir y versionar fuentes Chuchicharas
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: expandir-fuentes-chuchicharas
+  cancel-in-progress: false
+
+jobs:
+  expand-and-commit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Obtener rama de staging
+        uses: actions/checkout@v4
+        with:
+          ref: deploy/staging-local
+          fetch-depth: 0
+
+      - name: Extraer los cuatro paquetes y validar estructura
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          archives=(Chuchicharas-Parte-*.zip)
+          if [ "${#archives[@]}" -ne 4 ]; then
+            echo "::error::Se esperaban exactamente 4 ZIP Chuchicharas-Parte-*.zip; encontrados: ${#archives[@]}"
+            printf 'Archivos ZIP encontrados: %s\n' "${archives[*]:-ninguno}"
+            exit 1
+          fi
+          mkdir -p work
+          for archive in "${archives[@]}"; do
+            echo "Extrayendo: $archive"
+            unzip -oq "$archive" -d work
+          done
+          test -f work/Chuchicharas/frontend/package.json
+          test -f work/Chuchicharas/backend/package.json
+          test -f work/Chuchicharas/database/schema.sql
+          echo "Estructura detectada:"
+          find work/Chuchicharas -maxdepth 2 -type f | sort | head -200
+
+      - name: Incorporar fuentes al nivel raíz del repositorio
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -a work/Chuchicharas/. .
+          rm -f Chuchicharas-Parte-*.zip
+          rm -rf work
+          test -f frontend/package.json
+          test -f backend/package.json
+          test -f database/schema.sql
+          echo "Carpetas listas para configurar en Railway:"
+          printf '%s\n' "frontend/" "backend/" "database/"
+
+      - name: Confirmar y publicar cambios solo en staging
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No hay cambios nuevos para confirmar."
+            exit 0
+          fi
+          git commit -m "Extract Chuchicharas application source for Railway"
+          git push origin HEAD:deploy/staging-local
+          echo "Fuentes extraídas y confirmadas en deploy/staging-local."
