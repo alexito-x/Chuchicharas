@@ -84,6 +84,20 @@ let api = read('frontend/src/services/api.js');
 api = replaceOnce(api, "const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';", "const configuredApiUrl = import.meta.env.VITE_API_URL;\nif (import.meta.env.PROD && (!configuredApiUrl || !/^https:\\/\\//i.test(configuredApiUrl))) {\n  throw new Error('VITE_API_URL debe configurarse con la URL HTTPS pública de la API antes de compilar producción.');\n}\nconst API_URL = configuredApiUrl || 'http://localhost:3001/api/v1';", 'API HTTPS requerida');
 write('frontend/src/services/api.js', api);
 
+let frontendPackage = JSON.parse(read('frontend/package.json'));
+frontendPackage.dependencies = { ...frontendPackage.dependencies, 'react-router-dom': '^7.18.5' };
+frontendPackage.devDependencies = { ...frontendPackage.devDependencies, '@vitejs/plugin-react': '^6.0.3', vite: '^8.3.5' };
+write('frontend/package.json', JSON.stringify(frontendPackage, null, 2) + '\n');
+
+let frontendMain = read('frontend/src/main.jsx');
+frontendMain = replaceOnce(frontendMain, `const routerFutureFlags = {
+  v7_startTransition: true,
+  v7_relativeSplatPath: true
+};
+`, '', 'eliminar flags de transición ya incorporados en React Router 7');
+frontendMain = replaceOnce(frontendMain, '<BrowserRouter future={routerFutureFlags}>', '<BrowserRouter>', 'BrowserRouter compatible con React Router 7');
+write('frontend/src/main.jsx', frontendMain);
+
 const pkgPath = path.join(root, 'backend/package.json');
 const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
 delete pkg.dependencies?.multer;
