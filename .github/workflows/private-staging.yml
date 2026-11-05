@@ -86,13 +86,13 @@ jobs:
           MYSQL_CONTAINER=$(docker ps --format '{{.ID}} {{.Image}}' | awk '$2 ~ /^mysql:8.0/ {print $1; exit}')
           test -n "$MYSQL_CONTAINER"
           docker exec -i "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 chuchicharas_test < ../database/schema.sql
-          echo "=== ESQUEMA SQL ORIGINAL ==="
-      cat ../database/schema.sql
-      echo "=== TABLAS CREADAS ==="
-      docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -e "USE chuchicharas_test; SHOW TABLES;"
-      echo "=== COLUMNAS POR TABLA ==="
-      docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -N -e "SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='chuchicharas_test' ORDER BY TABLE_NAME, ORDINAL_POSITION;"
-      echo "=== FIN DEL DIAGNÓSTICO DEL ESQUEMA ==="
+              echo "=== ESQUEMA SQL ORIGINAL ==="
+          cat ../database/schema.sql
+          echo "=== TABLAS CREADAS ==="
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -e "USE chuchicharas_test; SHOW TABLES;"
+          echo "=== COLUMNAS POR TABLA ==="
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -N -e "SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='chuchicharas_test' ORDER BY TABLE_NAME, ORDINAL_POSITION;"
+          echo "=== FIN DEL DIAGNÓSTICO DEL ESQUEMA ==="
           find src test -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
           npm test
           npm run test:integration
