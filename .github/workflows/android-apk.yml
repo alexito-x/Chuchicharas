@@ -90,13 +90,20 @@ jobs:
           find src test -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
           npm test
           npm run test:integration
-      - name: Instalar y auditar frontend
+      - name: Resolver dependencias frontend y generar lockfile compatible
         working-directory: work/Chuchicharas/frontend
         run: |
           set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           npm ci
-          npm audit fix
+      - name: Auditar y compilar frontend
+        working-directory: work/Chuchicharas/frontend
+        env:
+          VITE_API_URL: https://ci-validation.invalid/api/v1
+        run: |
+          set -euo pipefail
           npm audit --audit-level=moderate
+          npm run build
       - name: Validar URL HTTPS de API para Android
         if: ${{ vars.ENABLE_ANDROID_APK_BUILD == 'true' }}
         env:
