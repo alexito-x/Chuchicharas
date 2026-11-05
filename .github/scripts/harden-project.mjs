@@ -177,4 +177,53 @@ test('health verifica conexión real con MySQL', async () => {
 });
 `;
 write('backend/test/auth.integration.test.js', integration);
+
+let smoke = read('backend/test/smoke.test.js');
+smoke = replaceOnce(smoke, "import app from '../src/server.js';", "import app from '../src/server.js';\nimport pool from '../src/config/database.js';", 'pool en smoke tests');
+smoke = replaceOnce(smoke, "after(async () => {\n  if (server) await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));\n});", "after(async () => {\n  if (server) {\n    server.closeAllConnections?.();\n    await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));\n  }\n  await pool.end();\n});", 'cerrar servidor y pool en smoke tests');
+smoke = replaceOnce(smoke, "assert.match(body.message, /API funcionando/);", "assert.match(body.message, /API y base de datos disponibles/);", 'mensaje health actualizado');
+write('backend/test/smoke.test.js', smoke);
+
+let frontendApi = read('frontend/src/services/api.js');
+frontendApi = replaceOnce(frontendApi, "export const getErrorMessage = (error) => {\n  if (error.response?.data?.errors?.length) {\n    return error.response.data.errors.map((e) => e.message).join('. ');\n  }\n  return (\n    error.response?.data?.message ||\n    error.message ||\n    'Ocurrió un error inesperado'\n  );\n};", "export const getErrorMessage = (error) => {\n  if (error.response?.data?.errors?.length) {\n    return error.response.data.errors.map((e) => e.message).join('. ');\n  }\n  if (error.code === 'ECONNABORTED') return 'El servidor tardó demasiado en responder. Inténtalo nuevamente.';\n  if (!error.response && (error.code === 'ERR_NETWORK' || error.message === 'Network Error')) {\n    if (typeof navigator !== 'undefined' && !navigator.onLine) return 'No hay conexión a internet. Revisa tus datos o Wi-Fi e inténtalo de nuevo.';\n    return 'No se pudo conectar con el servidor. La API puede estar apagada o aún no desplegada; inténtalo más tarde.';\n  }\n  return error.response?.data?.message || 'Ocurrió un error inesperado';\n};", 'mensajes de conexión en español');
+write('frontend/src/services/api.js', frontendApi);
+
+let main = read('frontend/src/main.jsx');
+main = replaceOnce(main, 'position="top-right"', 'position="bottom-center"', 'notificaciones abajo');
+main = replaceOnce(main, '                newestOnTop\n', '                newestOnTop={false}\n', 'orden de notificaciones');
+write('frontend/src/main.jsx', main);
+
+let styles = read('frontend/src/styles/main.css');
+styles += [
+  '',
+  '/* Notificaciones móviles: separadas del encabezado y respetando la zona segura */',
+  '.Toastify__toast-container--bottom-center {',
+  '  bottom: calc(env(safe-area-inset-bottom, 0px) + 14px);',
+  '  left: 50%;',
+  '  transform: translateX(-50%);',
+  '  width: min(420px, calc(100vw - 24px));',
+  '  padding: 0;',
+  '  z-index: 10000;',
+  '}',
+  '.Toastify__toast {',
+  '  min-height: 52px;',
+  '  margin-bottom: 8px;',
+  '  border-radius: 14px;',
+  '  box-shadow: 0 8px 28px rgba(17, 24, 39, 0.18);',
+  '}',
+  '@media (max-width: 720px) {',
+  '  .Toastify__toast-container--bottom-center {',
+  '    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);',
+  '    width: calc(100vw - 24px);',
+  '    max-width: 420px;',
+  '  }',
+  '  .Toastify__toast {',
+  '    font-size: 13px;',
+  '    padding: 10px 12px;',
+  '  }',
+  '}',
+  ''
+].join('\n');
+write('frontend/src/styles/main.css', styles);
+
 console.log('Hardening aplicado: CORS Android, health MySQL, auth middleware, validación, rate limit, API HTTPS obligatoria, tests de integración y eliminación de dependencias vulnerables no utilizadas (Multer, Nodemailer y uuid).');
