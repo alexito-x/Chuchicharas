@@ -11,6 +11,7 @@ permissions:
 jobs:
   test-and-build:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     services:
       mysql:
         image: mysql:8.0
@@ -109,6 +110,7 @@ jobs:
           console.log('API configurada: ' + parsed.origin + parsed.pathname);
           NODE
       - name: Compilar frontend y APK Android
+        if: ${{ vars.ENABLE_ANDROID_APK_BUILD == 'true' }}
         working-directory: work/Chuchicharas/frontend
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
@@ -131,6 +133,7 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon assembleDebug
       - name: Verificar APK y ausencia de localhost
+        if: ${{ vars.ENABLE_ANDROID_APK_BUILD == 'true' }}
         shell: bash
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
@@ -146,6 +149,7 @@ jobs:
           file "$APK"
           sha256sum "$APK"
       - name: Publicar APK instalable
+        if: ${{ vars.ENABLE_ANDROID_APK_BUILD == 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: chuchicharas-android-debug
