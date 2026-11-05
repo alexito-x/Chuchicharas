@@ -178,6 +178,12 @@ test('health verifica conexión real con MySQL', async () => {
 `;
 write('backend/test/auth.integration.test.js', integration);
 
+
+let authController = read('backend/src/controllers/authController.js');
+authController = replaceOnce(authController, "import { AppError, ValidationError } from '../middleware/errorHandler.js';", "import { AppError } from '../middleware/errorHandler.js';", 'import de errores de autenticación');
+authController = replaceOnce(authController, "throw new ValidationError('El email ya está registrado', [\n        { field: 'email', message: 'Este email ya está en uso' }\n      ]);", "throw new AppError('El email ya está registrado', 409, 'EMAIL_ALREADY_EXISTS');", 'email duplicado HTTP 409');
+write('backend/src/controllers/authController.js', authController);
+
 let smoke = read('backend/test/smoke.test.js');
 smoke = replaceOnce(smoke, "import app from '../src/server.js';", "import app from '../src/server.js';\nimport pool from '../src/config/database.js';", 'pool en smoke tests');
 smoke = replaceOnce(smoke, "after(async () => {\n  if (server) await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));\n});", "after(async () => {\n  if (server) {\n    server.closeAllConnections?.();\n    await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));\n  }\n  await pool.end();\n});", 'cerrar servidor y pool en smoke tests');
