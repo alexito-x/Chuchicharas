@@ -2,6 +2,9 @@ name: Expandir y versionar fuentes Chuchicharas
 
 on:
   workflow_dispatch:
+  push:
+    branches: [deploy/staging-local]
+    paths: [.github/workflows/expand-and-commit-sources.yml]
 
 permissions:
   contents: write
