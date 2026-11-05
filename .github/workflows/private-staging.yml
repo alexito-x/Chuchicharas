@@ -23,7 +23,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: ci_root_password_2026
-          MYSQL_DATABASE: chuchicharas_test
+          MYSQL_DATABASE: chuchicharas_db
         ports:
           - 3306:3306
         options: >-
@@ -76,7 +76,7 @@ jobs:
           DB_PORT: 3306
           DB_USER: root
           DB_PASSWORD: ci_root_password_2026
-          DB_NAME: chuchicharas_test
+          DB_NAME: chuchicharas_db
           JWT_SECRET: ci_access_secret_32_chars_minimum_2026
           JWT_REFRESH_SECRET: ci_refresh_secret_32_chars_minimum_2026
         run: |
@@ -89,9 +89,9 @@ jobs:
           echo "=== ESQUEMA SQL ORIGINAL ==="
           cat ../database/schema.sql
           echo "=== TABLAS CREADAS ==="
-          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -e "USE chuchicharas_test; SHOW TABLES;"
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -e "USE chuchicharas_db; SHOW TABLES;"
           echo "=== COLUMNAS POR TABLA ==="
-          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -N -e "SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='chuchicharas_test' ORDER BY TABLE_NAME, ORDINAL_POSITION;"
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -N -e "SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='chuchicharas_db' ORDER BY TABLE_NAME, ORDINAL_POSITION;"
           echo "=== FIN DEL DIAGNÓSTICO DEL ESQUEMA ==="
           find src test -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
           npm test
