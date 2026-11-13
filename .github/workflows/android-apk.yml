@@ -40,14 +40,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p work
-          shopt -s nullglob
-          archives=(Chuchicharas-Parte-*.zip)
-          if [ "${#archives[@]}" -ne 4 ]; then
-            echo "Se esperaban 4 paquetes ZIP y se encontraron ${#archives[@]}."
-            exit 1
+          mkdir -p work/Chuchicharas
+          if [ -f frontend/package.json ] && [ -f backend/package.json ] && [ -f database/schema.sql ]; then
+            echo "Usando fuentes versionadas del repositorio."
+            cp -a frontend backend database work/Chuchicharas/
+          else
+            echo "Fuentes expandidas no disponibles; extrayendo paquetes ZIP."
+            mkdir -p work
+            shopt -s nullglob
+            archives=(Chuchicharas-Parte-*.zip)
+            if [ "${#archives[@]}" -ne 4 ]; then
+              echo "Se esperaban 4 paquetes ZIP y se encontraron ${#archives[@]}."
+              exit 1
+            fi
+            for archive in "${archives[@]}"; do unzip -oq "$archive" -d work; done
           fi
-          for archive in "${archives[@]}"; do unzip -oq "$archive" -d work; done
           test -f work/Chuchicharas/frontend/package.json
           test -f work/Chuchicharas/backend/package.json
           test -f work/Chuchicharas/database/schema.sql

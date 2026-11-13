@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="techBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="techAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c2007a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#techBg)"/>
+  <rect x="150" y="200" width="500" height="400" rx="40" fill="rgba(255,255,255,0.05)" stroke="url(#techAccent)" stroke-width="2"/>
+  <rect x="200" y="250" width="400" height="280" rx="20" fill="rgba(0,0,0,0.4)"/>
+  <circle cx="400" cy="390" r="80" fill="none" stroke="url(#techAccent)" stroke-width="3" stroke-dasharray="10 10"/>
+  <circle cx="400" cy="390" r="50" fill="url(#techAccent)" opacity="0.2"/>
+  <path d="M360 390 L390 420 L440 360" fill="none" stroke="url(#techAccent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="280" y="520" width="240" height="8" rx="4" fill="url(#techAccent)" opacity="0.3"/>
+  <rect x="320" y="520" width="160" height="8" rx="4" fill="url(#techAccent)"/>
+  <text x="400" y="620" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800" fill="#fff">Tecnología</text>
+  <text x="400" y="670" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="400" fill="url(#techAccent)">Chuchicharas</text>
+  <g opacity="0.1">
+    <circle cx="100" cy="100" r="60" fill="url(#techAccent)"/>
+    <circle cx="700" cy="700" r="40" fill="url(#techAccent)"/>
+    <rect x="50" y="600" width="80" height="80" rx="10" fill="url(#techAccent)" transform="rotate(-15 50 600)"/>
+    <rect x="670" y="120" width="60" height="60" rx="8" fill="url(#techAccent)" transform="rotate(30 670 120)"/>
+  </g>
+</svg>

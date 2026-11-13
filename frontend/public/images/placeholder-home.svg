@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="homeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="homeAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c2007a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#homeBg)"/>
+  <path d="M150 450 L400 200 L650 450" fill="none" stroke="url(#homeAccent)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M150 450 L400 200 L650 450" fill="rgba(255,255,255,0.3)"/>
+  <rect x="220" y="300" width="360" height="300" rx="20" fill="rgba(255,255,255,0.9)" stroke="url(#homeAccent)" stroke-width="3"/>
+  <rect x="280" y="340" width="100" height="120" rx="10" fill="url(#homeAccent)" opacity="0.3"/>
+  <rect x="420" y="340" width="100" height="120" rx="10" fill="url(#homeAccent)" opacity="0.3"/>
+  <rect x="340" y="480" width="120" height="80" rx="10" fill="#fff" stroke="url(#homeAccent)" stroke-width="2"/>
+  <circle cx="365" cy="505" r="12" fill="url(#homeAccent)"/>
+  <circle cx="420" cy="480" r="80" fill="none" stroke="url(#homeAccent)" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="400" y="640" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800" fill="#1f2937">Hogar</text>
+  <text x="400" y="690" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="400" fill="#c2007a">Chuchicharas</text>
+  <g opacity="0.15">
+    <path d="M100 600 L150 500 L200 600" fill="url(#homeAccent)"/>
+    <path d="M600 600 L650 500 L700 600" fill="url(#homeAccent)"/>
+    <circle cx="700" cy="150" r="50" fill="url(#homeAccent)"/>
+    <circle cx="100" cy="150" r="30" fill="url(#homeAccent)"/>
+  </g>
+</svg>

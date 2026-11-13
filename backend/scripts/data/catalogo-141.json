@@ -1,0 +1,1287 @@
+{
+  "categories": [
+    {
+      "slug": "estrellas-articulos-variados",
+      "name": "Estrellas y Artículos Variados",
+      "parentSlug": null,
+      "sortOrder": 1,
+      "description": "Estrellas, puntas, varitas y artículos decorativos."
+    },
+    {
+      "slug": "estrellas-decoracion",
+      "name": "Estrellas y Decoración",
+      "parentSlug": "estrellas-articulos-variados",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "estrellas-varitas",
+      "name": "Varitas y Accesorios",
+      "parentSlug": "estrellas-articulos-variados",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "papeleria-oficina",
+      "name": "Papelería y Oficina",
+      "parentSlug": null,
+      "sortOrder": 2,
+      "description": "Libretas, escritura, materiales escolares y manualidades."
+    },
+    {
+      "slug": "papeleria-libretas",
+      "name": "Libretas y Cuadernos",
+      "parentSlug": "papeleria-oficina",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "papeleria-escritura",
+      "name": "Escritura y Colores",
+      "parentSlug": "papeleria-oficina",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "papeleria-escolares",
+      "name": "Escolares",
+      "parentSlug": "papeleria-oficina",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "papeleria-manualidades",
+      "name": "Papel y Manualidades",
+      "parentSlug": "papeleria-oficina",
+      "sortOrder": 4,
+      "description": null
+    },
+    {
+      "slug": "fiesta-regalos",
+      "name": "Fiesta y Regalos",
+      "parentSlug": null,
+      "sortOrder": 3,
+      "description": "Globos, bolsas de regalo, papel y disfraces."
+    },
+    {
+      "slug": "fiesta-globos",
+      "name": "Globos y Decoración",
+      "parentSlug": "fiesta-regalos",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "fiesta-bolsas",
+      "name": "Bolsas y Papel de Regalo",
+      "parentSlug": "fiesta-regalos",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "fiesta-disfraces",
+      "name": "Disfraces y Accesorios",
+      "parentSlug": "fiesta-regalos",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "accesorios-bano",
+      "name": "Accesorios de Baño",
+      "parentSlug": null,
+      "sortOrder": 4,
+      "description": "Organización, cortinas, cilindros y muebles para baño."
+    },
+    {
+      "slug": "bano-organizadores",
+      "name": "Organizadores y Topers",
+      "parentSlug": "accesorios-bano",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "bano-cortinas",
+      "name": "Cortinas de Baño",
+      "parentSlug": "accesorios-bano",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "bano-cilindros",
+      "name": "Cilindros y Botellas",
+      "parentSlug": "accesorios-bano",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "bano-muebles",
+      "name": "Muebles de Baño",
+      "parentSlug": "accesorios-bano",
+      "sortOrder": 4,
+      "description": null
+    },
+    {
+      "slug": "bano-accesorios",
+      "name": "Accesorios de Baño",
+      "parentSlug": "accesorios-bano",
+      "sortOrder": 5,
+      "description": null
+    },
+    {
+      "slug": "belleza-cuidado-personal",
+      "name": "Belleza y Cuidado Personal",
+      "parentSlug": null,
+      "sortOrder": 5,
+      "description": "Cosméticos, cuidado personal y accesorios de belleza."
+    },
+    {
+      "slug": "belleza-maquillaje",
+      "name": "Maquillaje",
+      "parentSlug": "belleza-cuidado-personal",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "belleza-unas",
+      "name": "Uñas",
+      "parentSlug": "belleza-cuidado-personal",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "belleza-cabello",
+      "name": "Cabello",
+      "parentSlug": "belleza-cuidado-personal",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "belleza-cuidado",
+      "name": "Cuidado Personal",
+      "parentSlug": "belleza-cuidado-personal",
+      "sortOrder": 4,
+      "description": null
+    },
+    {
+      "slug": "belleza-accesorios",
+      "name": "Accesorios de Belleza",
+      "parentSlug": "belleza-cuidado-personal",
+      "sortOrder": 5,
+      "description": null
+    },
+    {
+      "slug": "hogar-electrodomesticos",
+      "name": "Hogar y Electrodomésticos",
+      "parentSlug": null,
+      "sortOrder": 6,
+      "description": "Electrodomésticos, cocina, limpieza, organización y hogar."
+    },
+    {
+      "slug": "hogar-cocina",
+      "name": "Cocina",
+      "parentSlug": "hogar-electrodomesticos",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "hogar-limpieza",
+      "name": "Limpieza",
+      "parentSlug": "hogar-electrodomesticos",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "hogar-electro",
+      "name": "Electrodomésticos",
+      "parentSlug": "hogar-electrodomesticos",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "hogar-herramientas",
+      "name": "Herramientas",
+      "parentSlug": "hogar-electrodomesticos",
+      "sortOrder": 4,
+      "description": null
+    },
+    {
+      "slug": "hogar-organizacion",
+      "name": "Organización",
+      "parentSlug": "hogar-electrodomesticos",
+      "sortOrder": 5,
+      "description": null
+    },
+    {
+      "slug": "hogar-decoracion",
+      "name": "Decoración",
+      "parentSlug": "hogar-electrodomesticos",
+      "sortOrder": 6,
+      "description": null
+    },
+    {
+      "slug": "juguetes-bebes",
+      "name": "Juguetes y Bebés",
+      "parentSlug": null,
+      "sortOrder": 7,
+      "description": "Juguetes, juegos y artículos para bebés."
+    },
+    {
+      "slug": "juguetes-peluches",
+      "name": "Peluches",
+      "parentSlug": "juguetes-bebes",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "juguetes",
+      "name": "Juguetes",
+      "parentSlug": "juguetes-bebes",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "bebes",
+      "name": "Bebés",
+      "parentSlug": "juguetes-bebes",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "tecnologia-audio",
+      "name": "Tecnología y Audio",
+      "parentSlug": null,
+      "sortOrder": 8,
+      "description": "Audio y accesorios tecnológicos."
+    },
+    {
+      "slug": "moda",
+      "name": "Moda y Accesorios",
+      "parentSlug": null,
+      "sortOrder": 9,
+      "description": "Bolsos, calzado, calcetines y accesorios."
+    },
+    {
+      "slug": "moda-bolsos",
+      "name": "Bolsos y Carteras",
+      "parentSlug": "moda",
+      "sortOrder": 1,
+      "description": null
+    },
+    {
+      "slug": "moda-calzado",
+      "name": "Cinturones y Calzado",
+      "parentSlug": "moda",
+      "sortOrder": 2,
+      "description": null
+    },
+    {
+      "slug": "moda-cabello",
+      "name": "Accesorios de Cabello",
+      "parentSlug": "moda",
+      "sortOrder": 3,
+      "description": null
+    },
+    {
+      "slug": "moda-calcetines",
+      "name": "Calcetines y Medias",
+      "parentSlug": "moda",
+      "sortOrder": 4,
+      "description": null
+    },
+    {
+      "slug": "moda-sombrillas",
+      "name": "Sombrillas",
+      "parentSlug": "moda",
+      "sortOrder": 5,
+      "description": null
+    }
+  ],
+  "products": [
+    {
+      "sku": "1000000000191",
+      "name": "PELUCHE CHANCO CON ESTRELLA",
+      "price": 85.0,
+      "categorySlug": "juguetes-peluches",
+      "featured": false
+    },
+    {
+      "sku": "1000000001914",
+      "name": "PELUCHE AZUL CON SUDADERA ESTRELLAS EN OJOS",
+      "price": 68.0,
+      "categorySlug": "juguetes-peluches",
+      "featured": false
+    },
+    {
+      "sku": "1000000023398",
+      "name": "PELUCHE OSO CON SUDADERA DE ESTRELLA",
+      "price": 39.5,
+      "categorySlug": "juguetes-peluches",
+      "featured": false
+    },
+    {
+      "sku": "101018",
+      "name": "TROMPO ESTRELLA ECONOMICO",
+      "price": 12.5,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "10317",
+      "name": "VARITA LUMINOSA LUNA/ESTRELLA 8857-3",
+      "price": 17.5,
+      "categorySlug": "estrellas-varitas",
+      "featured": false
+    },
+    {
+      "sku": "10839",
+      "name": "ESTRELLA METALICA BRILLOSA",
+      "price": 4.5,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "11063",
+      "name": "UNICORNIO ACOSTADO CON ESTRELLA",
+      "price": 130.0,
+      "categorySlug": "juguetes-peluches",
+      "featured": false
+    },
+    {
+      "sku": "12763",
+      "name": "TRICOLOR ESTRELLA METALICA 6 PICOS",
+      "price": 36.8,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "13029",
+      "name": "ADORNO PARA NAVIDAD/ESTRELLA",
+      "price": 8.5,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "13191",
+      "name": "CAPA NEGRA CON ESTRELLAS",
+      "price": 25.0,
+      "categorySlug": "fiesta-disfraces",
+      "featured": false
+    },
+    {
+      "sku": "2520035937",
+      "name": "BOLSA DE REGALO ESTRELLAS",
+      "price": 20.0,
+      "categorySlug": "fiesta-bolsas",
+      "featured": false
+    },
+    {
+      "sku": "2525712912",
+      "name": "BOLSA DE REGALO ESTRELLAS",
+      "price": 15.0,
+      "categorySlug": "fiesta-bolsas",
+      "featured": false
+    },
+    {
+      "sku": "5112075302",
+      "name": "BOLSA DE REGALO ESTRELLAS",
+      "price": 14.0,
+      "categorySlug": "fiesta-bolsas",
+      "featured": false
+    },
+    {
+      "sku": "602760003914",
+      "name": "ESTRELLA BLOCK DE DIBUJO 20H AHUIJETA",
+      "price": 87.48,
+      "categorySlug": "papeleria-manualidades",
+      "featured": false
+    },
+    {
+      "sku": "602760004413",
+      "name": "ESTRELLA BLOCK DE DIBUJO PEGADO 20H",
+      "price": 91.8,
+      "categorySlug": "papeleria-manualidades",
+      "featured": false
+    },
+    {
+      "sku": "602760005280",
+      "name": "ESTRELLA LIBRETA FRANCESA MINI 100H",
+      "price": 13.5,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760004582",
+      "name": "ESTRELLA LIBRETA POKET",
+      "price": 4.0,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760001602",
+      "name": "ESTRELLA LIBRETA ITALIANA/RAYA",
+      "price": 16.25,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760001640",
+      "name": "ESTRELLA LIBRETA ITALIANA/DIBUJO",
+      "price": 16.25,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760001688",
+      "name": "ESTRELLA LIBRETA ITALIANA/DOBLE RAYA",
+      "price": 16.25,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760001725",
+      "name": "ESTRELLA LIBRETA ITALIANA 7MM",
+      "price": 16.25,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760004580",
+      "name": "ESTRELLA LIBRETA ITALIANA 5MM",
+      "price": 16.25,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760005600",
+      "name": "ESTRELLA CUADERNO MINI RAYA PASTA DURA",
+      "price": 25.77,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "602760005624",
+      "name": "ESTRELLA HOJAS PROYECIONAL DIBUJO",
+      "price": 17.4,
+      "categorySlug": "papeleria-manualidades",
+      "featured": false
+    },
+    {
+      "sku": "602760005714",
+      "name": "ESTRELLA HOJAS PROYECIONAL DOBLE RAYA",
+      "price": 17.4,
+      "categorySlug": "papeleria-manualidades",
+      "featured": false
+    },
+    {
+      "sku": "602760006737",
+      "name": "ESTRELLA HOJAS DE COLORES COMBINADOS",
+      "price": 17.4,
+      "categorySlug": "papeleria-manualidades",
+      "featured": false
+    },
+    {
+      "sku": "602760006556",
+      "name": "ESTRELLA LAPIZ ADHESIVO 8G",
+      "price": 8.14,
+      "categorySlug": "papeleria-escolares",
+      "featured": false
+    },
+    {
+      "sku": "602760006574",
+      "name": "ESTRELLA LAPIZ ADHESIVO 21G",
+      "price": 14.17,
+      "categorySlug": "papeleria-escolares",
+      "featured": false
+    },
+    {
+      "sku": "602760006581",
+      "name": "ESTRELLA COLORES MOSTER 12 PZ",
+      "price": 29.55,
+      "categorySlug": "papeleria-escritura",
+      "featured": true
+    },
+    {
+      "sku": "602760006542",
+      "name": "ESTRELLA COLORES MOSTER 24 PZ",
+      "price": 46.75,
+      "categorySlug": "papeleria-escritura",
+      "featured": false
+    },
+    {
+      "sku": "602796196002",
+      "name": "VARITA DE ESTRELLA/MAGIC",
+      "price": 6.8,
+      "categorySlug": "estrellas-varitas",
+      "featured": false
+    },
+    {
+      "sku": "602924319910",
+      "name": "ESTRELLA DE BELEN MULTICOLOR",
+      "price": 80.0,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "694564880163",
+      "name": "PUNTA DE ESTRELLA MAGICA COLOR 22L",
+      "price": 63.7,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "694564880075",
+      "name": "PUNTA DE ESTRELLA MAGICA COLOR 10L",
+      "price": 46.67,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "694564880057",
+      "name": "FIGURA DE PUNTA ESTRELLA COLOR 30L",
+      "price": 56.2,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "694564880072",
+      "name": "PUNTA DE ESTRELLA COLOR 30L",
+      "price": 59.5,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "697210595010",
+      "name": "CUCAS DE ESTRELLAS",
+      "price": 12.84,
+      "categorySlug": "moda-cabello",
+      "featured": false
+    },
+    {
+      "sku": "697545131733",
+      "name": "BROCHES CON ESTRELLAS P/CABELLO",
+      "price": 10.47,
+      "categorySlug": "moda-cabello",
+      "featured": false
+    },
+    {
+      "sku": "697545171118",
+      "name": "CUCAS DE ESTRELLAS",
+      "price": 16.8,
+      "categorySlug": "moda-cabello",
+      "featured": false
+    },
+    {
+      "sku": "6075464517347",
+      "name": "PUNTA DE ESTRELLA COLOR",
+      "price": 9.45,
+      "categorySlug": "estrellas-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "7500864000558",
+      "name": "YULIANA SOPORTE SHOWER",
+      "price": 158.4,
+      "categorySlug": "bano-accesorios",
+      "featured": true
+    },
+    {
+      "sku": "7500864000770",
+      "name": "YULIANA BOTE ACAPULCO NATURAL 40L",
+      "price": 227.2,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7500864001074",
+      "name": "YULIANA BOTE ACAPULCO NATURAL 40L CON LLAVE",
+      "price": 299.2,
+      "categorySlug": "bano-cilindros",
+      "featured": true
+    },
+    {
+      "sku": "7500864001418",
+      "name": "YULIANA TOPER CON 3 DIVISIONES",
+      "price": 84.8,
+      "categorySlug": "bano-organizadores",
+      "featured": false
+    },
+    {
+      "sku": "7500864002071",
+      "name": "YULIANA CILINDRO LEXUS CROMOS 1L",
+      "price": 65.6,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7500864002590",
+      "name": "YULIANA SILLA CHILLONA",
+      "price": 190.4,
+      "categorySlug": "bano-muebles",
+      "featured": false
+    },
+    {
+      "sku": "7500864004532",
+      "name": "YULIANA CILINDRO VENUS 400ML",
+      "price": 33.6,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7500864005836",
+      "name": "YULIANA COSMETIQUERA TRANSPARENTE",
+      "price": 57.6,
+      "categorySlug": "bano-organizadores",
+      "featured": false
+    },
+    {
+      "sku": "7500864006412",
+      "name": "YULIANA TOPER FLOWER DE 4PZ",
+      "price": 41.6,
+      "categorySlug": "bano-organizadores",
+      "featured": false
+    },
+    {
+      "sku": "7500864007441",
+      "name": "YULIANA TOPER DE 4PZ CON ROSCA",
+      "price": 51.2,
+      "categorySlug": "bano-organizadores",
+      "featured": false
+    },
+    {
+      "sku": "7500864008134",
+      "name": "YULIANA TOPER DE 4PZ",
+      "price": 73.6,
+      "categorySlug": "bano-organizadores",
+      "featured": false
+    },
+    {
+      "sku": "7500864008493",
+      "name": "YULIANA CILINDRO LEXUS 2L",
+      "price": 94.4,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7500864009100",
+      "name": "YULIANA CILINDRO LEXUS TRANS 1L",
+      "price": 65.6,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7500864009124",
+      "name": "YULIANA CILINDRO LEXUS TRANS 1.5L",
+      "price": 86.4,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7500864010156",
+      "name": "YULIANA CORTINA DE BAÑO DOLAR",
+      "price": 32.0,
+      "categorySlug": "bano-cortinas",
+      "featured": false
+    },
+    {
+      "sku": "7503021562685",
+      "name": "YULIANA CORTINA GRUESA DE BAÑO",
+      "price": 128.0,
+      "categorySlug": "bano-cortinas",
+      "featured": false
+    },
+    {
+      "sku": "7503023222099",
+      "name": "YULIANA TOPER CON 3 DIVISIONES",
+      "price": 83.2,
+      "categorySlug": "bano-organizadores",
+      "featured": false
+    },
+    {
+      "sku": "7503024487824",
+      "name": "YULIANA SOPORTE SHOWER",
+      "price": 158.4,
+      "categorySlug": "bano-accesorios",
+      "featured": false
+    },
+    {
+      "sku": "7503028551613",
+      "name": "YULIANA CILINDRO LEXUS 600ML",
+      "price": 48.0,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7503028865550",
+      "name": "YULIANA CILINDRO VENUS 2.2L",
+      "price": 49.6,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7503030964012",
+      "name": "YULIANA CILINDRO VENUS 1L",
+      "price": 36.8,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7503030964173",
+      "name": "YULIANA CORTINA DELGADA PARA BAÑO",
+      "price": 92.8,
+      "categorySlug": "bano-cortinas",
+      "featured": false
+    },
+    {
+      "sku": "7503030964432",
+      "name": "YULIANA BANCO RATTAN",
+      "price": 97.6,
+      "categorySlug": "bano-muebles",
+      "featured": false
+    },
+    {
+      "sku": "7503030964449",
+      "name": "YULIANA BANCO TIVURON PLATA",
+      "price": 86.4,
+      "categorySlug": "bano-muebles",
+      "featured": false
+    },
+    {
+      "sku": "7503030964517",
+      "name": "YULIANA CILINDRO VENUS POLIPRO 2.2L",
+      "price": 49.6,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7503030964524",
+      "name": "YULIANA CILINDRO VENUS POLIPRO 1.1L",
+      "price": 36.8,
+      "categorySlug": "bano-cilindros",
+      "featured": false
+    },
+    {
+      "sku": "7503030964784",
+      "name": "YULIANA BACO MERCEDES",
+      "price": 147.2,
+      "categorySlug": "bano-muebles",
+      "featured": false
+    },
+    {
+      "sku": "7503326094255",
+      "name": "OURO SEDA UVA 150ML",
+      "price": 140.25,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "10244",
+      "name": "BANDERIN CHICO",
+      "price": 20.02,
+      "categorySlug": "fiesta-globos",
+      "featured": false
+    },
+    {
+      "sku": "10423",
+      "name": "SET DE GLOBOS 5 PIEZAS PERSONAJES",
+      "price": 20.82,
+      "categorySlug": "fiesta-globos",
+      "featured": false
+    },
+    {
+      "sku": "7501502326153",
+      "name": "NUTRAPEL MASCARILLA CAPILAR CURLY 360G",
+      "price": 28.8,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7897041872141",
+      "name": "SKALA BRASIL ABACATE TRATAMIENTO ACONDICIONADOR 1KG",
+      "price": 95.0,
+      "categorySlug": "belleza-cabello",
+      "featured": true
+    },
+    {
+      "sku": "7502279000807",
+      "name": "OURO PROTECTOR DE CALOR/ARGAN 125ML",
+      "price": 196.0,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7502279000808",
+      "name": "BARBIUX ACEITE DE MACADAMIA 60ML",
+      "price": 149.8,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7502267390007",
+      "name": "RIZADO DE PESTAÑAS 3DENIS",
+      "price": 127.4,
+      "categorySlug": "belleza-accesorios",
+      "featured": false
+    },
+    {
+      "sku": "7503040008003",
+      "name": "BISSU MAQUILLAJE COMPACTO 01 TRANSLUCID",
+      "price": 196.7,
+      "categorySlug": "belleza-maquillaje",
+      "featured": true
+    },
+    {
+      "sku": "320005",
+      "name": "PRIMER PARA ROSTRO BISSU",
+      "price": 100.8,
+      "categorySlug": "belleza-maquillaje",
+      "featured": false
+    },
+    {
+      "sku": "054000751301",
+      "name": "TOALLAS SCOTT SHOP",
+      "price": 147.0,
+      "categorySlug": "hogar-limpieza",
+      "featured": false
+    },
+    {
+      "sku": "10856",
+      "name": "CORTINA DE LLUVIA CUADRADA VARIOS COLORES",
+      "price": 68.6,
+      "categorySlug": "fiesta-globos",
+      "featured": false
+    },
+    {
+      "sku": "12143",
+      "name": "DUMPLING LISO",
+      "price": 18.27,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "10585",
+      "name": "CEPILLO PLASTICO GUITARRA CERDAS DURAS",
+      "price": 32.4,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7503010569756",
+      "name": "ALBY ACEITE GLICERINA NATURAL",
+      "price": 23.8,
+      "categorySlug": "belleza-cuidado",
+      "featured": false
+    },
+    {
+      "sku": "10404",
+      "name": "BY APPLE SACAPUNTAS DOBLE",
+      "price": 23.49,
+      "categorySlug": "papeleria-escolares",
+      "featured": false
+    },
+    {
+      "sku": "10250",
+      "name": "PINZA PARA ROPA 100PCS",
+      "price": 7.0,
+      "categorySlug": "hogar-limpieza",
+      "featured": false
+    },
+    {
+      "sku": "5631897125481",
+      "name": "LOMAREY PISTOLA DE SILICON",
+      "price": 38.55,
+      "categorySlug": "papeleria-manualidades",
+      "featured": false
+    },
+    {
+      "sku": "13486",
+      "name": "CARTERA DOBLE/TRIPLE",
+      "price": 45.03,
+      "categorySlug": "moda-bolsos",
+      "featured": false
+    },
+    {
+      "sku": "11905",
+      "name": "PAPEL COREANO UN SOLO MODELO/PQ",
+      "price": 59.5,
+      "categorySlug": "fiesta-bolsas",
+      "featured": false
+    },
+    {
+      "sku": "7506601400148",
+      "name": "DONA DE TERCIOPELO/BRILLOSA",
+      "price": 47.25,
+      "categorySlug": "moda-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7506601400149",
+      "name": "NITRAM COTONETE BOITE 400PZ",
+      "price": 32.0,
+      "categorySlug": "belleza-cuidado",
+      "featured": false
+    },
+    {
+      "sku": "13259",
+      "name": "BISSU ESMALTE MINI A GRANEL",
+      "price": 19.2,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "13260",
+      "name": "BISSU ESMALTE GRANDE A GRANEL",
+      "price": 35.2,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "10830",
+      "name": "TIN ECONOMICO",
+      "price": 5.04,
+      "categorySlug": "moda-calcetines",
+      "featured": false
+    },
+    {
+      "sku": "12100",
+      "name": "TIN COTT-LINE VARIOS",
+      "price": 10.15,
+      "categorySlug": "moda-calcetines",
+      "featured": false
+    },
+    {
+      "sku": "10534",
+      "name": "DEDO DE PLASTICO",
+      "price": 5.0,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "10406",
+      "name": "BY APPLE CORTA UÑAS DE BEBE Y CADENA",
+      "price": 11.05,
+      "categorySlug": "bebes",
+      "featured": false
+    },
+    {
+      "sku": "630509449651",
+      "name": "PLASTILINA PLAY-DOH",
+      "price": 30.0,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "11097",
+      "name": "BARAJA PLASTIFICADA CAJA NEGRA",
+      "price": 24.3,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "12093",
+      "name": "LAPICERO FINO C/6PZ VARIOS",
+      "price": 30.0,
+      "categorySlug": "papeleria-escritura",
+      "featured": false
+    },
+    {
+      "sku": "10702",
+      "name": "PINK UP ESMALTE A GRANEL",
+      "price": 43.2,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "10906",
+      "name": "NUTRAPEL AMPOLLETAS VARIOS NUTRAPEL",
+      "price": 19.2,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "6925625456046",
+      "name": "CALCULADORA MEGATRONIC MG-8985A",
+      "price": 52.8,
+      "categorySlug": "papeleria-escolares",
+      "featured": false
+    },
+    {
+      "sku": "11120",
+      "name": "STIKER VARIOS CARICATURA",
+      "price": 4.4,
+      "categorySlug": "papeleria-escolares",
+      "featured": false
+    },
+    {
+      "sku": "7503041351979",
+      "name": "BISSU LABIAL MATE 22 VENECIA",
+      "price": 46.4,
+      "categorySlug": "belleza-maquillaje",
+      "featured": false
+    },
+    {
+      "sku": "7502283479243",
+      "name": "CUATRO POLVO ACRILICO #16",
+      "price": 23.0,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "6975464590838",
+      "name": "TIP P/UÑA SEMICUADRADO",
+      "price": 22.0,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "7502285962361",
+      "name": "MC PEGAMENTO PARA UÑAS GOTERO",
+      "price": 20.0,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "11287",
+      "name": "TOALLA NEGRA SCHWARZKOPF PROFECIONAL",
+      "price": 50.4,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "11290",
+      "name": "HIDRA CUBRIDOR LARGO NEGRO SCHWARZKOPF E",
+      "price": 80.0,
+      "categorySlug": "belleza-accesorios",
+      "featured": false
+    },
+    {
+      "sku": "000006",
+      "name": "RIZADO DE PESTAÑAS PERMANENTE BELLET",
+      "price": 100.0,
+      "categorySlug": "belleza-accesorios",
+      "featured": false
+    },
+    {
+      "sku": "10650",
+      "name": "TRENZA GRANDE/MEDIANA",
+      "price": 28.8,
+      "categorySlug": "moda-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7502295831305",
+      "name": "PINK UP MAQUILLAJE EASY COVER 700",
+      "price": 156.8,
+      "categorySlug": "belleza-maquillaje",
+      "featured": false
+    },
+    {
+      "sku": "12608",
+      "name": "AURIFONOS MANOS LIBRES SIN GOMA",
+      "price": 19.0,
+      "categorySlug": "tecnologia-audio",
+      "featured": false
+    },
+    {
+      "sku": "034264042520",
+      "name": "LICUADORA OSTER 10 VELOCIDADES/6662",
+      "price": 680.0,
+      "categorySlug": "hogar-electro",
+      "featured": true
+    },
+    {
+      "sku": "10033",
+      "name": "SOMBRILLA DE BOLSILLO S-53",
+      "price": 95.0,
+      "categorySlug": "moda-sombrillas",
+      "featured": false
+    },
+    {
+      "sku": "04895174141989",
+      "name": "BOCINA BLUETOOTH VA479TL",
+      "price": 130.0,
+      "categorySlug": "tecnologia-audio",
+      "featured": false
+    },
+    {
+      "sku": "8022297167251",
+      "name": "ALFAPAEF #11.02",
+      "price": 134.94,
+      "categorySlug": "belleza-cabello",
+      "featured": true
+    },
+    {
+      "sku": "888881693085",
+      "name": "CILINDRO PARA AGUA 3 PIEZAS CAPIBARA VARIOS COLORES",
+      "price": 65.6,
+      "categorySlug": "hogar-organizacion",
+      "featured": true
+    },
+    {
+      "sku": "7501438363130",
+      "name": "KUUL COLOR ME SHAMPOO 300ML",
+      "price": 420.0,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "C12023017566799",
+      "name": "MUÑECA CUTE GIRL",
+      "price": 420.0,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "12704",
+      "name": "ALTIVA ALCANCIA DE METAL VARIOS",
+      "price": 31.5,
+      "categorySlug": "hogar-decoracion",
+      "featured": false
+    },
+    {
+      "sku": "10247",
+      "name": "CHANCLA SPORT VARIOS",
+      "price": 35.7,
+      "categorySlug": "moda-calzado",
+      "featured": false
+    },
+    {
+      "sku": "12221",
+      "name": "LOTERIA/SERPIENTES Y ESCALETAS CAMPI",
+      "price": 28.8,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "7501611833498",
+      "name": "PLUMON DELINEADOR PARA OJOS",
+      "price": 30.0,
+      "categorySlug": "belleza-maquillaje",
+      "featured": false
+    },
+    {
+      "sku": "602760004597",
+      "name": "ESTRELLA LIBRETA PROFECIONAL 5MM",
+      "price": 17.4,
+      "categorySlug": "papeleria-libretas",
+      "featured": false
+    },
+    {
+      "sku": "10376",
+      "name": "CINTURON CAJA/AGUJA",
+      "price": 49.92,
+      "categorySlug": "moda-calzado",
+      "featured": false
+    },
+    {
+      "sku": "076440832846",
+      "name": "JUEGO DE JARRA ANCHOR",
+      "price": 230.0,
+      "categorySlug": "hogar-cocina",
+      "featured": false
+    },
+    {
+      "sku": "7908782200508",
+      "name": "KIT DE DESARMADOR CON 12 PZ",
+      "price": 36.0,
+      "categorySlug": "hogar-herramientas",
+      "featured": false
+    },
+    {
+      "sku": "10630",
+      "name": "PLANTILLA BLANCA P/10PZ",
+      "price": 49.0,
+      "categorySlug": "moda-calzado",
+      "featured": false
+    },
+    {
+      "sku": "11134",
+      "name": "CABALLO DE PALO",
+      "price": 105.0,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "7501009231165",
+      "name": "ESTROPAJO DUTCHIBA",
+      "price": 12.45,
+      "categorySlug": "hogar-limpieza",
+      "featured": false
+    },
+    {
+      "sku": "13403",
+      "name": "BOLSA DE REGALO 14 DE FEBRERO/GRANDE",
+      "price": 18.0,
+      "categorySlug": "fiesta-bolsas",
+      "featured": false
+    },
+    {
+      "sku": "4895155648148",
+      "name": "VENTILADOR DAEWO/45 WATTS",
+      "price": 700.0,
+      "categorySlug": "hogar-electro",
+      "featured": false
+    },
+    {
+      "sku": "4891861205064",
+      "name": "PATINETIA DE 4 RUEDAS/AVENGERS",
+      "price": 350.0,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "13085",
+      "name": "CARREOLA PARA MUÑECA MY-5530",
+      "price": 415.0,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "7506289918065",
+      "name": "KEHEL UÑA MARAVILLA TOP COAT",
+      "price": 140.0,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "12684",
+      "name": "DINO SAUR SPRAY DIY M8018-70",
+      "price": 78.3,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "7501438366483",
+      "name": "KUUL TRATAMIENTO CURE RECONSTRUCTOR 245G",
+      "price": 94.9,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7501438363321",
+      "name": "KUUL CERA P/CABELLO MORADA",
+      "price": 28.48,
+      "categorySlug": "belleza-cabello",
+      "featured": false
+    },
+    {
+      "sku": "7502252850486",
+      "name": "PRIS ACETONA PURA 125ML",
+      "price": 44.98,
+      "categorySlug": "belleza-unas",
+      "featured": false
+    },
+    {
+      "sku": "027084120134",
+      "name": "CARRITO HOT WHEELS/CAJA CON 72PZ",
+      "price": 70.0,
+      "categorySlug": "juguetes",
+      "featured": false
+    },
+    {
+      "sku": "13166",
+      "name": "PELUCHE ECO/CARICATURAS VARIOS",
+      "price": 156.8,
+      "categorySlug": "juguetes-peluches",
+      "featured": false
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+/* =========================================================
+   PARALLAX · IMÁGENES QUE SE EXPANDEN AL HACER SCROLL
+   Se importa DESPUÉS de main.css y sobrescribe solo lo necesario.
+   Las animaciones las dirige GSAP + ScrollTrigger (ScrollFx.jsx);
+   aquí vive la estructura, los estados iniciales y los fallbacks.
+   Para volver al diseño anterior basta con quitar el import.
+   ========================================================= */
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sticky-top: calc(var(--header-height) + 20px);
+}
+
+/* ScrollTrigger calcula el scroll por su cuenta: el smooth nativo
+   provoca saltos al refrescar posiciones. */
+html {
+  scroll-behavior: auto;
+}
+
+/* El contenedor de Home no debe animar transform (rompería el sticky). */
+.container.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+
+/* ---------- HERO: la tarjeta de producto crece hasta ocupar media portada ---------- */
+.hero-stage {
+  position: relative;
+}
+
+.hero {
+  min-height: clamp(420px, 62vh, 560px);
+}
+
+/* Sin error de carga no hay recorrido vacío: el hero vuelve a su altura normal. */
+.hero-stage:has(+ .alert-error) {
+  height: auto;
+}
+
+@media (min-width: 1101px) {
+  .hero {
+    grid-template-columns: minmax(0, 40%) 1fr;
+  }
+
+  .hero-content {
+    will-change: transform;
+  }
+
+  .hero-visual {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 34px;
+    right: 40px;
+    bottom: 34px;
+    width: 38%;
+    border-radius: 22px;
+    overflow: hidden;
+    animation: none; /* se quita el "float": ahora el movimiento lo marca el scroll */
+    box-shadow: 0 30px 60px rgba(46, 16, 55, 0.4);
+  }
+
+  .hero-visual:empty {
+    display: none;
+  }
+
+  .hero-visual img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+    will-change: transform;
+  }
+
+  /* Degradado que funde el panel con el hero conforme se expande (--shade: 0 → 1) */
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--plum-soft) 0%, rgba(76, 29, 92, 0) 40%);
+    opacity: var(--shade, 0);
+    pointer-events: none;
+  }
+}
+
+/* Recorrido de scroll durante el cual el hero queda fijo mientras se expande */
+@media (min-width: 1101px) and (prefers-reduced-motion: no-preference) {
+  .hero-stage {
+    height: 150vh;
+  }
+
+  .hero-stage .hero {
+    position: sticky;
+    top: var(--sticky-top);
+  }
+}
+
+/* ---------- TARJETAS DE PRODUCTO: la imagen se abre y respira con el scroll ---------- */
+.product-image-wrap img {
+  /* GSAP controla `transform`; el hover usa la propiedad `scale`, independiente.
+     Sin esto la transición de main.css suavizaría cada frame del scrub y se vería pesado. */
+  transition: scale 0.45s var(--ease-out);
+}
+
+.product-card:hover .product-image-wrap img {
+  transform: none;
+  scale: 1.06;
+}
+
+/* ---------- CATEGORÍAS ---------- */
+.category-card img {
+  will-change: transform, opacity;
+}
+
+/* ---------- CARRUSEL DE CATEGORÍAS: imágenes con parallax sutil ---------- */
+.category-carousel-media img {
+  will-change: transform;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.category-carousel-card:hover .category-carousel-media img {
+  transform: none;
+  scale: 1.05;
+}
+
+/* ---------- GALERÍA DE PRODUCTO: parallax zoom en imagen principal ---------- */
+.detail-main-image img {
+  will-change: transform;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.detail-main-image.is-zoomable:hover img {
+  transform: none;
+  scale: 1.02;
+}
+
+/* ---------- MAPA DE CONTACTO: revelación suave ---------- */
+.contact-map {
+  will-change: transform, opacity;
+  transition: transform 0.45s var(--ease-out), opacity 0.45s var(--ease-out);
+}
+
+/* ---------- BANNER DESTACADO: parallax de fondo ---------- */
+.featured-banner {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-banner-bg {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+.featured-banner-content {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+}
+
+/* ---------- Sin movimiento: todo en su estado final ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual,
+  .hero-content {
+    animation: none;
+  }
+
+  .product-image-wrap img,
+  .category-carousel-media img,
+  .detail-main-image img {
+    transition: none;
+  }
+
+  .contact-map {
+    transition: none;
+  }
+
+  .featured-banner-bg,
+  .featured-banner-content {
+    transform: none !important;
+  }
+}

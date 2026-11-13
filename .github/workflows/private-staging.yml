@@ -1,0 +1,206 @@
+name: Entorno privado de pruebas
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - deploy/staging-local
+
+permissions:
+  contents: read
+
+concurrency:
+  group: private-staging-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integration-tests:
+    name: Backend, MySQL y frontend (sin despliegue)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ci_root_password_2026
+          MYSQL_DATABASE: chuchicharas_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -pci_root_password_2026"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
+    steps:
+      - name: Obtener código de la rama de pruebas
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js y Java
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Extraer y validar los cuatro paquetes
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/Chuchicharas
+          if [ -f frontend/package.json ] && [ -f backend/package.json ] && [ -f database/schema.sql ]; then
+            echo "Usando fuentes versionadas del repositorio."
+            cp -a frontend backend database work/Chuchicharas/
+          else
+            echo "Fuentes expandidas no disponibles; extrayendo paquetes ZIP."
+            mkdir -p work
+            shopt -s nullglob
+            archives=(Chuchicharas-Parte-*.zip)
+            if [ "${#archives[@]}" -ne 4 ]; then
+              echo "Se esperaban 4 paquetes ZIP y se encontraron ${#archives[@]}."
+              exit 1
+            fi
+            for archive in "${archives[@]}"; do unzip -oq "$archive" -d work; done
+          fi
+          test -f work/Chuchicharas/frontend/package.json
+          test -f work/Chuchicharas/backend/package.json
+          test -f work/Chuchicharas/database/schema.sql
+
+      - name: Validar y preparar scripts
+        run: |
+          set -euo pipefail
+          node --check .github/scripts/prepare-frontend.mjs
+          node --check .github/scripts/harden-project.mjs
+          node .github/scripts/prepare-frontend.mjs
+          node .github/scripts/harden-project.mjs
+
+      - name: Instalar y probar backend con MySQL temporal
+        working-directory: work/Chuchicharas/backend
+        env:
+          NODE_ENV: test
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASSWORD: ci_root_password_2026
+          DB_NAME: chuchicharas_db
+          JWT_SECRET: ci_access_secret_32_chars_minimum_2026
+          JWT_REFRESH_SECRET: ci_refresh_secret_32_chars_minimum_2026
+        run: |
+          set -euo pipefail
+          npm ci
+          npm audit --audit-level=moderate
+          MYSQL_CONTAINER=$(docker ps --format '{{.ID}} {{.Image}}' | awk '$2 ~ /^mysql:8.0/ {print $1; exit}')
+          test -n "$MYSQL_CONTAINER"
+          docker exec -i "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 chuchicharas_db < ../database/schema.sql
+          echo "=== ESQUEMA SQL ORIGINAL ==="
+          cat ../database/schema.sql
+          echo "=== TABLAS CREADAS ==="
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -e "USE chuchicharas_db; SHOW TABLES;"
+          echo "=== COLUMNAS POR TABLA ==="
+          docker exec "$MYSQL_CONTAINER" mysql -uroot -pci_root_password_2026 -N -e "SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA='chuchicharas_db' ORDER BY TABLE_NAME, ORDINAL_POSITION;"
+          echo "=== FIN DEL DIAGNÓSTICO DEL ESQUEMA ==="
+          find src test -type f \( -name '*.js' -o -name '*.mjs' \) -print0 | xargs -0 -n1 node --check
+          npm test
+          npm run test:integration
+
+      - name: Instalar y compilar frontend para validación
+        working-directory: work/Chuchicharas/frontend
+        env:
+          VITE_API_URL: https://test-only.invalid/api/v1
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci
+          npm audit --audit-level=moderate
+          npm run build
+
+      - name: Confirmar que no se generó ni publicó un despliegue
+        run: |
+          set -euo pipefail
+          test -d work/Chuchicharas/frontend/dist
+          test ! -d work/Chuchicharas/frontend/android
+          echo "Validación terminada. No se desplegó ningún servicio ni se publicó una APK."
+
+  android-design-demo:
+    name: APK Android de demostración visual (sin backend)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Obtener código de la rama de pruebas
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js y Java 21
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Preparar fuentes del frontend
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p work/Chuchicharas
+          if [ -f frontend/package.json ]; then
+            cp -a frontend work/Chuchicharas/
+          else
+            shopt -s nullglob
+            archives=(Chuchicharas-Parte-*.zip)
+            if [ "${#archives[@]}" -ne 4 ]; then
+              echo "No se encontraron fuentes frontend ni los cuatro ZIP del proyecto."
+              exit 1
+            fi
+            mkdir -p work
+            for archive in "${archives[@]}"; do unzip -oq "$archive" -d work; done
+          fi
+          test -f work/Chuchicharas/frontend/package.json
+          test -f work/Chuchicharas/frontend/vite.config.js
+
+      - name: Construir interfaz web para Android
+        working-directory: work/Chuchicharas/frontend
+        env:
+          VITE_API_URL: https://demo-offline.invalid/api/v1
+        run: |
+          set -euo pipefail
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci
+          node --input-type=module -e "import fs from 'node:fs'; const p='vite.config.js'; let s=fs.readFileSync(p,'utf8'); if (!/base:/.test(s)) s=s.replace('export default defineConfig({', \"export default defineConfig({\\n  base: './',\"); fs.writeFileSync(p,s);"
+          npm run build
+
+      - name: Generar proyecto Android con Capacitor
+        working-directory: work/Chuchicharas/frontend
+        run: |
+          set -euo pipefail
+          npm install --no-save --no-package-lock @capacitor/core@7 @capacitor/cli@7 @capacitor/android@7
+          cat > capacitor.config.json <<'JSON'
+          {
+            "appId": "com.chuchicharas.demo",
+            "appName": "Chuchicharas Demo",
+            "webDir": "dist",
+            "server": { "androidScheme": "https" }
+          }
+          JSON
+          npx cap add android
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+
+      - name: Verificar APK
+        run: |
+          set -euo pipefail
+          APK="work/Chuchicharas/frontend/android/app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$APK"
+          file "$APK"
+          sha256sum "$APK"
+
+      - name: Entregar instalador APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: chuchicharas-demo-visual-apk
+          path: work/Chuchicharas/frontend/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
